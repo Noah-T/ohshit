@@ -44,7 +44,7 @@
     // Create sdk instance
     self.phHueSDK = [[PHHueSDK alloc] init];
     [self.phHueSDK startUpSDK];
-    [self.phHueSDK enableLogging:YES];
+    [self.phHueSDK enableLogging:NO];
     // Create the main view controller in a navigation controller and make the navigation controller the rootviewcontroller of the app
     PHControlLightsViewController *controlLightsViewController = [[PHControlLightsViewController alloc] initWithNibName:@"PHControlLightsViewController" bundle:[NSBundle mainBundle]];
     

@@ -11,11 +11,22 @@
 
 @interface PHControlLightsViewController()
 
+@property (nonatomic) int gryoDataCounter;
+@property (nonatomic) int accelDataCounter;
+
 @property (nonatomic,weak) IBOutlet UILabel *bridgeMacLabel;
 @property (nonatomic,weak) IBOutlet UILabel *bridgeIpLabel;
 @property (nonatomic,weak) IBOutlet UILabel *bridgeLastHeartbeatLabel;
 @property (nonatomic,weak) IBOutlet UIButton *randomLightsButton;
 
+@property (nonatomic) float xMin;
+@property (nonatomic) float xMax;
+@property (nonatomic) float yMin;
+@property (nonatomic) float yMax;
+@property (nonatomic) float zMin;
+@property (nonatomic) float zMax;
+@property (nonatomic) float lengthMin;
+@property (nonatomic) float lengthMax;
 //Myo
 @property (strong, nonatomic) TLMPose *currentPose;
 @property (weak, nonatomic) IBOutlet UIButton *connectMyoButton;
@@ -37,6 +48,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.xMin = 0.0;
+    self.xMax = 0.0;
+    self.yMin = 0.0;
+    self.yMax = 0.0;
+    self.zMin = 0.0;
+    self.zMax = 0.0;
     
     PHNotificationManager *notificationManager = [PHNotificationManager defaultManager];
     // Register for the local heartbeat notifications
@@ -66,6 +84,15 @@
                                                  name:TLMMyoDidReceivePoseChangedNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveGyroscopeEvent:)
+                                                 name:TLMMyoDidReceiveGyroscopeEventNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveAccelerometerEvent:)
+                                                 name:TLMMyoDidReceiveAccelerometerEventNotification
+                                               object:nil];
     //Myo
     [self.connectMyoButton setEnabled:NO];
 }
@@ -155,7 +182,7 @@
             if (errors != nil) {
                 NSString *message = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Errors", @""), errors != nil ? errors : NSLocalizedString(@"none", @"")];
                 
-                NSLog(@"Response: %@",message);
+                //nslog(@"Response: %@",message);
             }
             
             [self.randomLightsButton setEnabled:YES];
@@ -189,10 +216,12 @@
     // Handle the cases of the TLMPoseType enumeration, and change the color of helloLabel based on the pose we receive.
     switch (pose.type) {
         case TLMPoseTypeUnknown:
+            NSLog(@"unknown pose");
         case TLMPoseTypeRest:
+            NSLog(@"Resting");
         case TLMPoseTypeDoubleTap:
             // Changes helloLabel's font to Helvetica Neue when the user is in a rest or unknown pose.
-            NSLog(@"Unknown, rest, double tap");
+            //NSLog(@"double tap");
             break;
         case TLMPoseTypeFist:
             // Changes helloLabel's font to Noteworthy when the user is in a fist pose.
@@ -224,7 +253,62 @@
     }
 }
 
+- (void)didReceiveGyroscopeEvent:(NSNotification *)notification {
+    
+    self.gryoDataCounter ++;
+    TLMGyroscopeEvent *gyro = notification.userInfo[@"kTLMKeyGyroscopeEvent"];
 
+    /*
+    if (self.gryoDataCounter == 25) {
+        
+        TLMGyroscopeEvent *gyro = notification.userInfo[@"kTLMKeyGyroscopeEvent"];
+        //nslog(@"gyro: %@", gyro);
+        //nslog(@"length: %f", GLKVector3Length(gyro.vector)); //based on speed
+        //nslog(@"distance: \nx:%.2f\ny:%.2f\nz:%.2f\n",gyro.vector.x, gyro.vector.y, gyro.vector.z);
+        self.gryoDataCounter = 0;
+    } */
+    
+    if (gyro.vector.x > self.xMax) {
+        self.xMax = gyro.vector.x;
+    }else if (gyro.vector.x < self.xMin) {
+        self.xMin = gyro.vector.x;
+    }
+    
+    if (gyro.vector.y > self.yMax) {
+        self.yMax = gyro.vector.y;
+    }else if (gyro.vector.y < self.yMin) {
+        self.yMin = gyro.vector.y;
+    }
+    
+    if (gyro.vector.z > self.zMax) {
+        self.zMax = gyro.vector.z;
+    }else if (gyro.vector.z < self.zMin) {
+        self.zMin = gyro.vector.z;
+    }
+    
+    if (GLKVector3Length(gyro.vector) > self.lengthMax){
+        self.lengthMax = GLKVector3Length(gyro.vector);
+    }else if (GLKVector3Length(gyro.vector) < self.lengthMin){
+        self.lengthMin = GLKVector3Length(gyro.vector);
+    }
+    
+    NSLog(@"\nxMin: %f\nxMax: %f\nyMin: %f\nyMax: %f\nzMin: %f\nzMax: %f\n", self.xMin, self.xMax, self.yMin, self.yMax, self.zMin, self.zMax);
+    NSLog(@"\nlengthMin: %f\nlengthMax: %f\n", self.lengthMin, self.lengthMax);
+    
+           
+}
+
+- (void)didReceiveAccelerometerEvent:(NSNotification *)notification {
+    
+    self.accelDataCounter ++;
+    if (self.accelDataCounter == 15) {
+        
+        TLMAccelerometerEvent *accel = notification.userInfo[@"kTLMKeyAccelerometerEvent"];
+        //nslog(@"distance: \nx:%.2f\ny:%.2f\nz:%.2f\n",accel.vector.x, accel.vector.y, accel.vector.z);
+        self.accelDataCounter = 0;
+    }
+    
+}
 - (void)randomizeColorsForMyo
 {
     [self.randomLightsButton setEnabled:NO];
@@ -245,7 +329,7 @@
             if (errors != nil) {
                 NSString *message = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Errors", @""), errors != nil ? errors : NSLocalizedString(@"none", @"")];
                 
-                NSLog(@"Response: %@",message);
+                //nslog(@"Response: %@",message);
             }
             
             [self.randomLightsButton setEnabled:YES];
