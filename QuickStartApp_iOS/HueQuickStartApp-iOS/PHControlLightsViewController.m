@@ -20,6 +20,11 @@
 @property (strong, nonatomic) TLMPose *currentPose;
 @property (weak, nonatomic) IBOutlet UIButton *connectMyoButton;
 
+@property (nonatomic) int currentLightIndex;
+@property (nonatomic) int currentHue;
+@property (nonatomic) int currentSaturation;
+@property (nonatomic) int currentBrightness;
+
 @end
 
 
@@ -68,6 +73,11 @@
     
     //Myo
     [self.connectMyoButton setEnabled:NO];
+    
+    self.currentLightIndex = 1;
+    self.currentHue = 3000;
+    self.currentSaturation = 20;
+    self.currentBrightness = 20;
 }
 
 - (UIRectEdge)edgesForExtendedLayout {
@@ -153,9 +163,9 @@
         // Send lightstate to light
         [bridgeSendAPI updateLightStateForId:light.identifier withLightState:lightState completionHandler:^(NSArray *errors) {
             if (errors != nil) {
-                NSString *message = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Errors", @""), errors != nil ? errors : NSLocalizedString(@"none", @"")];
-                
-                NSLog(@"Response: %@",message);
+//                NSString *message = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Errors", @""), errors != nil ? errors : NSLocalizedString(@"none", @"")];
+//                
+//                NSLog(@"Response: %@",message);
             }
             
             [self.randomLightsButton setEnabled:YES];
@@ -192,22 +202,29 @@
         case TLMPoseTypeRest:
         case TLMPoseTypeDoubleTap:
             // Changes helloLabel's font to Helvetica Neue when the user is in a rest or unknown pose.
-            NSLog(@"Unknown, rest, double tap");
+            //NSLog(@"Unknown, rest, double tap");
             break;
         case TLMPoseTypeFist:
             // Changes helloLabel's font to Noteworthy when the user is in a fist pose.
             NSLog(@"fist!");
+            [self changeLight1];
             break;
         case TLMPoseTypeWaveIn:             // Changes helloLabel's font to Courier New when the user is in a wave in pose.
             NSLog(@"wave in pose");
+            //[self descreaseLightIndex];
+            [self decreaseHue];
             break;
         case TLMPoseTypeWaveOut:
             // Changes helloLabel's font to Snell Roundhand when the user is in a wave out pose.
             NSLog(@"wave out");
+            
+            //[self increaseLightIndex];
+            [self increaseHue];
             break;
         case TLMPoseTypeFingersSpread:
             [self randomizeColorsForMyo];
             NSLog(@"fingers spread");
+            [self randomizeColorsForMyo];
             break;
     }
     // Unlock the Myo whenever we receive a pose
@@ -237,20 +254,110 @@
         PHLightState *lightState = [[PHLightState alloc] init];
         
         [lightState setHue:[NSNumber numberWithInt:arc4random() % MAX_HUE]];
-        [lightState setBrightness:[NSNumber numberWithInt:254]];
-        [lightState setSaturation:[NSNumber numberWithInt:254]];
+        [lightState setBrightness:[NSNumber numberWithInt:arc4random() % 254]];
+        [lightState setSaturation:[NSNumber numberWithInt:arc4random() % 254]];
         
         // Send lightstate to light
         [bridgeSendAPI updateLightStateForId:light.identifier withLightState:lightState completionHandler:^(NSArray *errors) {
             if (errors != nil) {
-                NSString *message = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Errors", @""), errors != nil ? errors : NSLocalizedString(@"none", @"")];
-                
-                NSLog(@"Response: %@",message);
+//                NSString *message = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Errors", @""), errors != nil ? errors : NSLocalizedString(@"none", @"")];
+//                
+//                NSLog(@"Response: %@",message);
             }
             
             [self.randomLightsButton setEnabled:YES];
         }];
     }
+}
+
+
+- (void)changeLight1
+{
+    
+    int lightSwitch;
+    PHBridgeResourcesCache *cache = [PHBridgeResourcesReader readBridgeResourcesCache];
+    PHBridgeSendAPI *bridgeSendAPI = [[PHBridgeSendAPI alloc] init];
+    
+    //NSString *lightIndexString = [NSString stringWithFormat:@"%d", self.currentLightIndex];
+    PHLight *firstLight = [cache.lights objectForKey:@"1"];
+    PHLightState *firstLightState = firstLight.lightState;
+    
+    [firstLightState setHue:[NSNumber numberWithInt:self.currentHue]];
+    [firstLightState setBrightness:[NSNumber numberWithInt: 254]];
+    [firstLightState setSaturation:[NSNumber numberWithInt:self.currentSaturation]];
+        lightSwitch = 1;
+        //NSLog(@"light switch value is: %d", lightSwitch);
+    
+    
+    
+    [bridgeSendAPI updateLightStateForId:firstLight.identifier withLightState:firstLightState completionHandler:^(NSArray *errors) {
+        if (errors != nil) {
+            NSString *message = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Errors", @""), errors != nil ? errors : NSLocalizedString(@"none", @"")];
+           
+          NSLog(@"Response: %@",message);
+        }
+    }];
+}
+
+- (void)increaseLightIndex
+{
+    if (self.currentLightIndex < 3) {
+        self.currentLightIndex++;
+    }
+    NSLog(@"light index is: %d", self.currentLightIndex);
+}
+
+- (void)descreaseLightIndex
+{
+    if (self.currentLightIndex > 1) {
+        self.currentLightIndex--;
+    }
+    NSLog(@"light index is: %d", self.currentLightIndex);
+
+}
+
+- (void)increaseHue
+{
+    if (self.currentHue < 60000) {
+        self.currentHue += 10000;
+    }
+    
+    if (self.currentSaturation <230) {
+        self.currentSaturation +=20;
+    }
+    
+    if (self.currentBrightness <230) {
+        self.currentBrightness +=20;
+    }
+    
+    
+    [self changeLight1];
+    NSLog(@"increase called");
+    NSLog(@"current hue: %d", self.currentHue);
+    NSLog(@"current brightnes: %d", self.currentBrightness);
+    NSLog(@"current saturation: %d", self.currentSaturation);
+}
+
+- (void)decreaseHue
+{
+    if (self.currentHue > 6000) {
+        self.currentHue -= 10000;
+    }
+    
+    if (self.currentSaturation >30) {
+        self.currentSaturation -=20;
+    }
+    
+    if (self.currentBrightness >30) {
+        self.currentBrightness -=20;
+    }
+    [self changeLight1];
+    NSLog(@"decrease called");
+    NSLog(@"current hue: %d", self.currentHue);
+    NSLog(@"current brightnes: %d", self.currentBrightness);
+    NSLog(@"current saturation: %d", self.currentSaturation);
+
+
 }
 
 @end
