@@ -8,6 +8,8 @@
 
 #import "NATHomeViewController.h"
 #import <MyoKit/MyoKit.h>
+#import <HueSDK_iOS/HueSDK.h>
+#import "PHControlLightsViewController.h"
 
 @interface NATHomeViewController ()
 
@@ -61,6 +63,14 @@
     [self.navigationController pushViewController:settings animated:YES];
 }
 
+- (IBAction)connectToHue:(id)sender {
+    
+    PHControlLightsViewController *phlvc = [[PHControlLightsViewController alloc] init];
+    [self.navigationController pushViewController:phlvc animated:YES];
+    
+    
+}
+
 
 - (void)didReceiveOrientationEvent:(NSNotification*)notification {
     TLMOrientationEvent *orientation = notification.userInfo[kTLMKeyOrientationEvent];
@@ -84,13 +94,12 @@
             // Changes helloLabel's font to Noteworthy when the user is in a fist pose.
             NSLog(@"fist!");
             break;
-        case TLMPoseTypeWaveIn:
-            // Changes helloLabel's font to Courier New when the user is in a wave in pose.
+        case TLMPoseTypeWaveIn:             // Changes helloLabel's font to Courier New when the user is in a wave in pose.
             NSLog(@"wave in pose");
             break;
         case TLMPoseTypeWaveOut:
             // Changes helloLabel's font to Snell Roundhand when the user is in a wave out pose.
-            NSLog(@"Snell roundhand");
+            NSLog(@"wave out");
             break;
         case TLMPoseTypeFingersSpread:
             // Changes helloLabel's font to Chalkduster when the user is in a fingers spread pose.
