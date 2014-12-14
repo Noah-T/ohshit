@@ -7,6 +7,7 @@
 #import "PHAppDelegate.h"
 #import <MyoKit/MyoKit.h>
 #import <HueSDK_iOS/HueSDK.h>
+#import "PHLoadingViewController.h"
 #define MAX_HUE 65535
 
 @interface PHControlLightsViewController()
@@ -45,6 +46,14 @@
 @property (nonatomic) int currentSaturation;
 @property (nonatomic) int currentBrightness;
 
+//Philips
+@property (strong, nonatomic) PHHueSDK *PHHueSDK;
+@property (strong, nonatomic) PHLoadingViewController *loadingView;
+@property (strong, nonatomic) PHBridgeSearching *bridgeSearch;
+@property (nonatomic, strong) PHBridgeSelectionViewController *bridgeSelectionViewController;
+
+@property (nonatomic, strong) UIAlertView *noBridgeFoundAlert;
+
 @end
 
 
@@ -62,6 +71,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSLog(@"viewDidLoad says hello");
     
     self.xMin = 0.0;
     self.xMax = 0.0;
@@ -141,6 +151,39 @@
     self.currentHue = 3000;
     self.currentSaturation = 20;
     self.currentBrightness = 20;
+    
+    self.PHHueSDK = [[PHHueSDK alloc] init];
+    [self.PHHueSDK startUpSDK];
+    [self.PHHueSDK enableLogging:NO];
+    
+
+    
+    /***************************************************
+     The SDK will send the following notifications in response to events:
+     
+     - LOCAL_CONNECTION_NOTIFICATION
+     This notification will notify that the bridge heartbeat occurred and the bridge resources cache data has been updated
+     
+     - NO_LOCAL_CONNECTION_NOTIFICATION
+     This notification will notify that there is no connection with the bridge
+     
+     - NO_LOCAL_AUTHENTICATION_NOTIFICATION
+     This notification will notify that there is no authentication against the bridge
+     *****************************************************/
+    
+    [notificationManager registerObject:self withSelector:@selector(localConnection) forNotification:LOCAL_CONNECTION_NOTIFICATION];
+    [notificationManager registerObject:self withSelector:@selector(noLocalConnection) forNotification:NO_LOCAL_CONNECTION_NOTIFICATION];
+    [notificationManager registerObject:self withSelector:@selector(notAuthenticated) forNotification:NO_LOCAL_AUTHENTICATION_NOTIFICATION];
+    
+    /***************************************************
+     The local heartbeat is a regular timer event in the SDK. Once enabled the SDK regular collects the current state of resources managed
+     by the bridge into the Bridge Resources Cache
+     *****************************************************/
+    
+    [self enableLocalHeartbeat];
+    [self.PHHueSDK setLocalHeartbeatInterval:0.5f forResourceType: RESOURCES_LIGHTS];
+
+
 }
 
 - (UIRectEdge)edgesForExtendedLayout {
@@ -572,7 +615,7 @@
     NSLog(@"current brightnes: %d", self.currentBrightness);
     NSLog(@"current saturation: %d", self.currentSaturation);
 
-
+}
 - (void)transitionColor
 {
     [self.randomLightsButton setEnabled:NO];
@@ -625,5 +668,114 @@
     self.fistActive = NO;
     self.fingersSpreadActive = NO;
 }
+
+- (void)enableLocalHeartbeat {
+    /***************************************************
+     The heartbeat processing collects data from the bridge
+     so now try to see if we have a bridge already connected
+     *****************************************************/
+    
+    PHBridgeResourcesCache *cache = [PHBridgeResourcesReader readBridgeResourcesCache];
+    if (cache != nil && cache.bridgeConfiguration != nil && cache.bridgeConfiguration.ipaddress != nil) {
+        //
+        [self showLoadingViewWithText:NSLocalizedString(@"Connecting...", @"Connecting text")];
+        
+        // Enable heartbeat with interval of 10 seconds
+        [self.PHHueSDK enableLocalConnection];
+    } else {
+        // Automaticly start searching for bridges
+        [self searchForBridgeLocal];
+    }
+}
+
+/**
+ Shows an overlay over the whole screen with a black box with spinner and loading text in the middle
+ @param text The text to display under the spinner
+ */
+- (void)showLoadingViewWithText:(NSString *)text {
+    // First remove
+    [self removeLoadingView];
+    
+    // Then add new
+    self.loadingView = [[PHLoadingViewController alloc] initWithNibName:@"PHLoadingViewController" bundle:[NSBundle mainBundle]];
+    self.loadingView.view.frame = self.navigationController.view.bounds;
+    [self.navigationController.view addSubview:self.loadingView.view];
+    self.loadingView.loadingLabel.text = text;
+}
+
+/**
+ Search for bridges using UPnP and portal discovery, shows results to user or gives error when none found.
+ */
+- (void)searchForBridgeLocal {
+    // Stop heartbeats
+    [self disableLocalHeartbeat];
+    
+    // Show search screen
+    [self showLoadingViewWithText:NSLocalizedString(@"Searching...", @"Searching for bridges text")];
+    /***************************************************
+     A bridge search is started using UPnP to find local bridges
+     *****************************************************/
+    
+    // Start search
+    self.bridgeSearch = [[PHBridgeSearching alloc] initWithUpnpSearch:YES andPortalSearch:YES andIpAdressSearch:YES];
+    [self.bridgeSearch startSearchWithCompletionHandler:^(NSDictionary *bridgesFound) {
+        // Done with search, remove loading view
+        [self removeLoadingView];
+        
+        /***************************************************
+         The search is complete, check whether we found a bridge
+         *****************************************************/
+        
+        // Check for results
+        if (bridgesFound.count > 0) {
+            
+            // Results were found, show options to user (from a user point of view, you should select automatically when there is only one bridge found)
+            self.bridgeSelectionViewController = [[PHBridgeSelectionViewController alloc] initWithNibName:@"PHBridgeSelectionViewController" bundle:[NSBundle mainBundle] bridges:bridgesFound delegate:self];
+            
+            /***************************************************
+             Use the list of bridges, present them to the user, so one can be selected.
+             *****************************************************/
+            
+            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:self.bridgeSelectionViewController];
+            navController.modalPresentationStyle = UIModalPresentationFormSheet;
+            [self.navigationController presentViewController:navController animated:YES completion:nil];
+        }
+        else {
+            /***************************************************
+             No bridge was found was found. Tell the user and offer to retry..
+             *****************************************************/
+            
+            // No bridges were found, show this to the user
+            
+            self.noBridgeFoundAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No bridges", @"No bridge found alert title")
+                                                                 message:NSLocalizedString(@"Could not find bridge", @"No bridge found alert message")
+                                                                delegate:self
+                                                       cancelButtonTitle:nil
+                                                       otherButtonTitles:NSLocalizedString(@"Retry", @"No bridge found alert retry button"),NSLocalizedString(@"Cancel", @"No bridge found alert cancel button"), nil];
+            self.noBridgeFoundAlert.tag = 1;
+            [self.noBridgeFoundAlert show];
+        }
+    }];
+}
+
+/**
+ Removes the full screen loading overlay.
+ */
+- (void)removeLoadingView {
+    if (self.loadingView != nil) {
+        [self.loadingView.view removeFromSuperview];
+        self.loadingView = nil;
+    }
+}
+
+/**
+ Stops the local heartbeat
+ */
+- (void)disableLocalHeartbeat {
+    [self.PHHueSDK disableLocalConnection];
+}
+
+
+
 
 @end
