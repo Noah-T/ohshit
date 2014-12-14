@@ -27,6 +27,15 @@
 @property (nonatomic) float zMax;
 @property (nonatomic) float lengthMin;
 @property (nonatomic) float lengthMax;
+
+@property (nonatomic) BOOL restActive;
+@property (nonatomic) BOOL fistActive;
+@property (nonatomic) BOOL fingersSpreadActive;
+@property (nonatomic) float xRotation;
+@property (nonatomic) int grpHue;
+@property (nonatomic) int grpBrt;
+@property (nonatomic) int grpSat;
+
 //Myo
 @property (strong, nonatomic) TLMPose *currentPose;
 @property (weak, nonatomic) IBOutlet UIButton *connectMyoButton;
@@ -60,6 +69,33 @@
     self.yMax = 0.0;
     self.zMin = 0.0;
     self.zMax = 0.0;
+    self.xRotation = 0.0;
+    self.grpHue = 0;
+    self.grpBrt = 255;
+    self.grpSat = 255;
+    
+    PHBridgeSendAPI *bridgeSendAPI = [[PHBridgeSendAPI alloc] init];
+    
+    PHLightState *lightState = [[PHLightState alloc] init];
+    
+    [lightState setHue:[NSNumber numberWithInt:self.grpHue]];
+    [lightState setTransitionTime:[NSNumber numberWithInt:@0]];
+    [lightState setBrightness:[NSNumber numberWithInt:self.grpBrt]];
+    [lightState setSaturation:[NSNumber numberWithInt:self.grpSat]];
+    
+    [bridgeSendAPI setLightStateForGroupWithId:@"0" lightState:lightState completionHandler:^(NSArray *errors){
+        if (errors != nil) {
+            NSLog(@"lightState.hue: %@", lightState.hue);
+            NSLog(@"lightState.brt: %@", lightState.brightness);
+            NSLog(@"lightState.sat: %@", lightState.saturation);
+            NSLog(@"State updated");
+            
+        } else {
+            for (NSError *error in errors) {
+                NSLog(@"Error: %@", [error localizedDescription]);
+            }
+        }
+    }];
     
     PHNotificationManager *notificationManager = [PHNotificationManager defaultManager];
     // Register for the local heartbeat notifications
@@ -224,17 +260,21 @@
     TLMPose *pose = notification.userInfo[kTLMKeyPose];
     self.currentPose = pose;
     // Handle the cases of the TLMPoseType enumeration, and change the color of helloLabel based on the pose we receive.
+    [self clearStates];
     switch (pose.type) {
         case TLMPoseTypeUnknown:
             NSLog(@"unknown pose");
         case TLMPoseTypeRest:
             NSLog(@"Resting");
+            self.restActive = YES;
         case TLMPoseTypeDoubleTap:
             // Changes helloLabel's font to Helvetica Neue when the user is in a rest or unknown pose.
             //NSLog(@"Unknown, rest, double tap");
             break;
         case TLMPoseTypeFist:
             // Changes helloLabel's font to Noteworthy when the user is in a fist pose.
+            [self clearStates];
+            self.fistActive = YES;
             NSLog(@"fist!");
             [self changeLight1];
             break;
@@ -251,7 +291,8 @@
             [self increaseHue];
             break;
         case TLMPoseTypeFingersSpread:
-            [self randomizeColorsForMyo];
+            [self clearStates];
+            self.fingersSpreadActive = YES;
             NSLog(@"fingers spread");
             [self randomizeColorsForMyo];
             break;
@@ -272,19 +313,68 @@
 
 - (void)didReceiveGyroscopeEvent:(NSNotification *)notification {
     
-    self.gryoDataCounter ++;
+    //Get the Gyro notification
+    PHBridgeResourcesCache *cache = [PHBridgeResourcesReader readBridgeResourcesCache];
+    PHBridgeSendAPI *bridgeSendAPI = [[PHBridgeSendAPI alloc] init];
+    NSArray *myLights = [cache.lights allValues];
     TLMGyroscopeEvent *gyro = notification.userInfo[@"kTLMKeyGyroscopeEvent"];
 
-    /*
-    if (self.gryoDataCounter == 25) {
+    //Increment counter
+    self.gryoDataCounter ++;
+    if (self.gryoDataCounter == 20) {
+        if (self.fistActive) {
+            self.grpHue = self.xRotation + self.grpHue;
+            // Send lightstate to light
+            if (self.grpHue < 0) {
+                self.grpHue = 0;
+            } else {
+                if (self.grpHue > MAX_HUE) {
+                    self.grpHue = MAX_HUE;
+                }
+            }
+        } else if (self.fingersSpreadActive){
+            self.grpBrt = self.xRotation/2 + self.grpBrt;
+            self.grpSat = self.xRotation/2 + self.grpSat;
+            // Send lightstate to light
+            if (self.grpBrt < 0) {
+                self.grpBrt = 0;
+            } else {
+                if (self.grpBrt > 255) {
+                    self.grpBrt = 255;
+                }
+            }
+            
+        }
+        if (!self.restActive){
+            TLMGyroscopeEvent *gyro = notification.userInfo[@"kTLMKeyGyroscopeEvent"];
+            self.xRotation += gyro.vector.x;
+            NSLog(@"self.xRotation: %f", self.xRotation);
+            
+            PHLightState *lightState = [[PHLightState alloc] init];
+            
+            [lightState setHue:[NSNumber numberWithInt:self.grpHue]];
+            [lightState setTransitionTime:[NSNumber numberWithInt:@0]];
+            [lightState setBrightness:[NSNumber numberWithInt:self.grpBrt]];
+            [lightState setSaturation:[NSNumber numberWithInt:self.grpSat]];
+            
+            [bridgeSendAPI setLightStateForGroupWithId:@"0" lightState:lightState completionHandler:^(NSArray *errors){
+                if (errors != nil) {
+                    NSLog(@"lightState.hue: %@", lightState.hue);
+                    NSLog(@"lightState.brt: %@", lightState.brightness);
+                    NSLog(@"lightState.sat: %@", lightState.saturation);
+                    NSLog(@"State updated");
+                    
+                } else {
+                    for (NSError *error in errors) {
+                        NSLog(@"Error: %@", [error localizedDescription]);
+                    }
+                }
+            }];
+        }
         
-        TLMGyroscopeEvent *gyro = notification.userInfo[@"kTLMKeyGyroscopeEvent"];
-        //nslog(@"gyro: %@", gyro);
-        //nslog(@"length: %f", GLKVector3Length(gyro.vector)); //based on speed
-        //nslog(@"distance: \nx:%.2f\ny:%.2f\nz:%.2f\n",gyro.vector.x, gyro.vector.y, gyro.vector.z);
         self.gryoDataCounter = 0;
-    } */
-    
+    }
+/*
     if (gyro.vector.x > self.xMax) {
         self.xMax = gyro.vector.x;
     }else if (gyro.vector.x < self.xMin) {
@@ -311,12 +401,13 @@
     
     NSLog(@"\nxMin: %f\nxMax: %f\nyMin: %f\nyMax: %f\nzMin: %f\nzMax: %f\n", self.xMin, self.xMax, self.yMin, self.yMax, self.zMin, self.zMax);
     NSLog(@"\nlengthMin: %f\nlengthMax: %f\n", self.lengthMin, self.lengthMax);
+    */
     
-           
+    
 }
 
 - (void)didReceiveAccelerometerEvent:(NSNotification *)notification {
-    
+    /*
     self.accelDataCounter ++;
     if (self.accelDataCounter == 15) {
         
@@ -325,6 +416,44 @@
         self.accelDataCounter = 0;
     }
     
+    
+    //ACCELEROMETER
+    TLMAccelerometerEvent *gyro = notification.userInfo[@"kTLMKeyAccelerometerEvent"];
+
+    if (gyro.vector.x > self.xMax) {
+        self.xMax = gyro.vector.x;
+    }else if (gyro.vector.x < self.xMin) {
+        self.xMin = gyro.vector.x;
+    }
+    
+    if (gyro.vector.y > self.yMax) {
+        self.yMax = gyro.vector.y;
+    }else if (gyro.vector.y < self.yMin) {
+        self.yMin = gyro.vector.y;
+    }
+    
+    if (gyro.vector.z > self.zMax) {
+        self.zMax = gyro.vector.z;
+    }else if (gyro.vector.z < self.zMin) {
+        self.zMin = gyro.vector.z;
+    }
+    
+    if (GLKVector3Length(gyro.vector) > self.lengthMax){
+        self.lengthMax = GLKVector3Length(gyro.vector);
+    }else if (GLKVector3Length(gyro.v
+     ector) < self.lengthMin){
+        self.lengthMin = GLKVector3Length(gyro.vector);
+    }
+    
+    //NSLog(@"\nxMin: %f\nxMax: %f\nyMin: %f\nyMax: %f\nzMin: %f\nzMax: %f\n", self.xMin, self.xMax, self.yMin, self.yMax, self.zMin, self.zMax);
+    //NSLog(@"\nlengthMin: %f\nlengthMax: %f\n", self.lengthMin, self.lengthMax);
+    self.accelDataCounter ++;
+    if (self.accelDataCounter == 10) {
+        NSLog(@"\nx: %f\ny: %f\nz: %f", gyro.vector.x, gyro.vector.y, gyro.vector.z);
+        self.accelDataCounter = 0;
+    }
+     
+     */
 }
 - (void)randomizeColorsForMyo
 {
@@ -341,7 +470,10 @@
         [lightState setBrightness:[NSNumber numberWithInt:arc4random() % 254]];
         [lightState setSaturation:[NSNumber numberWithInt:arc4random() % 254]];
         
+        
+        
         // Send lightstate to light
+        NSLog(@"setting the hue to: %@", lightState.hue);
         [bridgeSendAPI updateLightStateForId:light.identifier withLightState:lightState completionHandler:^(NSArray *errors) {
             if (errors != nil) {
 //                NSString *message = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Errors", @""), errors != nil ? errors : NSLocalizedString(@"none", @"")];
@@ -353,7 +485,6 @@
         }];
     }
 }
-
 
 - (void)changeLight1
 {
@@ -442,6 +573,57 @@
     NSLog(@"current saturation: %d", self.currentSaturation);
 
 
+- (void)transitionColor
+{
+    [self.randomLightsButton setEnabled:NO];
+    
+    PHBridgeResourcesCache *cache = [PHBridgeResourcesReader readBridgeResourcesCache];
+    PHBridgeSendAPI *bridgeSendAPI = [[PHBridgeSendAPI alloc] init];
+    
+    for (PHLight *light in cache.lights.allValues) {
+        
+        PHLightState *lightState = [[PHLightState alloc] init];
+        lightState.transitionTime = @250;
+        [lightState setHue:[NSNumber numberWithInt:0]];
+        [lightState setBrightness:[NSNumber numberWithInt:254]];
+        [lightState setSaturation:[NSNumber numberWithInt:254]];
+        
+        
+        
+        // Send lightstate to light
+        [bridgeSendAPI updateLightStateForId:light.identifier withLightState:lightState completionHandler:^(NSArray *errors) {
+            if (errors != nil) {
+                NSString *message = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Errors", @""), errors != nil ? errors : NSLocalizedString(@"none", @"")];
+                
+                //nslog(@"Response: %@",message);
+            }
+            
+            [self.randomLightsButton setEnabled:YES];
+        }];
+    }
+    
+    
+}
+#pragma mark - Myo 
+- (IBAction)cycleLights:(id)sender {
+    [self transitionColor];
+}
+
+- (void)fistHammer
+{
+    //Fist in vertical position swinging downward in a hammer like motion
+    
+    
+    //fist is active
+    
+}
+
+- (void)clearStates
+{
+    self.xRotation = 0.0;
+    self.restActive = NO;
+    self.fistActive = NO;
+    self.fingersSpreadActive = NO;
 }
 
 @end

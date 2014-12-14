@@ -80,6 +80,7 @@
      *****************************************************/
     
     [self enableLocalHeartbeat];
+    [self.phHueSDK setLocalHeartbeatInterval:0.5f forResourceType: RESOURCES_LIGHTS];
     
     
     //Myo
