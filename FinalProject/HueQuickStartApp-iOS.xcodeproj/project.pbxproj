@@ -25,14 +25,18 @@
 		4CCACFDD165693F4008E9D69 /* press_smartbridge.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCACFD5165693F4008E9D69 /* press_smartbridge.png */; };
 		4CCACFDE165693F4008E9D69 /* press_smartbridge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCACFD6165693F4008E9D69 /* press_smartbridge@2x.png */; };
 		87194E79184F7FA700576916 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87194E78184F7FA700576916 /* CoreGraphics.framework */; };
+		DE3EBD101A3E3A24008937AE /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DE3EBD071A3E3A24008937AE /* DDAbstractDatabaseLogger.m */; };
+		DE3EBD111A3E3A24008937AE /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DE3EBD091A3E3A24008937AE /* DDASLLogger.m */; };
+		DE3EBD121A3E3A24008937AE /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DE3EBD0B1A3E3A24008937AE /* DDFileLogger.m */; };
+		DE3EBD131A3E3A24008937AE /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DE3EBD0D1A3E3A24008937AE /* DDLog.m */; };
+		DE3EBD141A3E3A24008937AE /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DE3EBD0F1A3E3A24008937AE /* DDTTYLogger.m */; };
+		DE3EBD231A3E3BD4008937AE /* ContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DE3EBD201A3E3BD4008937AE /* ContextFilterLogFormatter.m */; };
+		DE3EBD241A3E3BD4008937AE /* DispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DE3EBD221A3E3BD4008937AE /* DispatchQueueLogFormatter.m */; };
+		DE3EBD2E1A3E3DC8008937AE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE3EBD2D1A3E3DC8008937AE /* Images.xcassets */; };
+		DE3EBD301A3E47A7008937AE /* blank-01.png in Resources */ = {isa = PBXBuildFile; fileRef = DE3EBD2F1A3E47A7008937AE /* blank-01.png */; };
+		DE3EBD321A3E482B008937AE /* url.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DE3EBD311A3E482B008937AE /* url.jpg */; };
+		DE3EBD671A3FE6FE008937AE /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE3EBD661A3FE6FE008937AE /* SettingsViewController.m */; };
 		DEF1F0701A3E1537003F917F /* MyoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEF1F06F1A3E1537003F917F /* MyoKit.framework */; };
-		F715240118337FD50033689C /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = F71523F318337FD50033689C /* DDAbstractDatabaseLogger.m */; };
-		F715240218337FD50033689C /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = F71523F518337FD50033689C /* DDASLLogger.m */; };
-		F715240318337FD50033689C /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = F71523F718337FD50033689C /* DDFileLogger.m */; };
-		F715240418337FD50033689C /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = F71523F918337FD50033689C /* DDLog.m */; };
-		F715240518337FD50033689C /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = F71523FB18337FD50033689C /* DDTTYLogger.m */; };
-		F715240618337FD50033689C /* ContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F71523FE18337FD50033689C /* ContextFilterLogFormatter.m */; };
-		F715240718337FD50033689C /* DispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F715240018337FD50033689C /* DispatchQueueLogFormatter.m */; };
 		F7ADC2A017FDAAA70038A1D6 /* PHControlLightsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7ADC29E17FDAAA70038A1D6 /* PHControlLightsViewController.m */; };
 		F7ADC2A117FDAAA70038A1D6 /* PHControlLightsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7ADC29F17FDAAA70038A1D6 /* PHControlLightsViewController.xib */; };
 /* End PBXBuildFile section */
@@ -63,21 +67,26 @@
 		4CCACFD5165693F4008E9D69 /* press_smartbridge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = press_smartbridge.png; sourceTree = "<group>"; };
 		4CCACFD6165693F4008E9D69 /* press_smartbridge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "press_smartbridge@2x.png"; sourceTree = "<group>"; };
 		87194E78184F7FA700576916 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		DE3EBD061A3E3A24008937AE /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDAbstractDatabaseLogger.h; path = ../../realHue/ohshit/QuickStartApp_iOS/Lumberjack/DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
+		DE3EBD071A3E3A24008937AE /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDAbstractDatabaseLogger.m; path = ../../realHue/ohshit/QuickStartApp_iOS/Lumberjack/DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
+		DE3EBD081A3E3A24008937AE /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDASLLogger.h; path = ../../realHue/ohshit/QuickStartApp_iOS/Lumberjack/DDASLLogger.h; sourceTree = "<group>"; };
+		DE3EBD091A3E3A24008937AE /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDASLLogger.m; path = ../../realHue/ohshit/QuickStartApp_iOS/Lumberjack/DDASLLogger.m; sourceTree = "<group>"; };
+		DE3EBD0A1A3E3A24008937AE /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDFileLogger.h; path = ../../realHue/ohshit/QuickStartApp_iOS/Lumberjack/DDFileLogger.h; sourceTree = "<group>"; };
+		DE3EBD0B1A3E3A24008937AE /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDFileLogger.m; path = ../../realHue/ohshit/QuickStartApp_iOS/Lumberjack/DDFileLogger.m; sourceTree = "<group>"; };
+		DE3EBD0C1A3E3A24008937AE /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDLog.h; path = ../../realHue/ohshit/QuickStartApp_iOS/Lumberjack/DDLog.h; sourceTree = "<group>"; };
+		DE3EBD0D1A3E3A24008937AE /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDLog.m; path = ../../realHue/ohshit/QuickStartApp_iOS/Lumberjack/DDLog.m; sourceTree = "<group>"; };
+		DE3EBD0E1A3E3A24008937AE /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDTTYLogger.h; path = ../../realHue/ohshit/QuickStartApp_iOS/Lumberjack/DDTTYLogger.h; sourceTree = "<group>"; };
+		DE3EBD0F1A3E3A24008937AE /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDTTYLogger.m; path = ../../realHue/ohshit/QuickStartApp_iOS/Lumberjack/DDTTYLogger.m; sourceTree = "<group>"; };
+		DE3EBD1F1A3E3BD4008937AE /* ContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContextFilterLogFormatter.h; path = ../../../realHue/ohshit/QuickStartApp_iOS/Lumberjack/Extensions/ContextFilterLogFormatter.h; sourceTree = "<group>"; };
+		DE3EBD201A3E3BD4008937AE /* ContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContextFilterLogFormatter.m; path = ../../../realHue/ohshit/QuickStartApp_iOS/Lumberjack/Extensions/ContextFilterLogFormatter.m; sourceTree = "<group>"; };
+		DE3EBD211A3E3BD4008937AE /* DispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DispatchQueueLogFormatter.h; path = ../../../realHue/ohshit/QuickStartApp_iOS/Lumberjack/Extensions/DispatchQueueLogFormatter.h; sourceTree = "<group>"; };
+		DE3EBD221A3E3BD4008937AE /* DispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DispatchQueueLogFormatter.m; path = ../../../realHue/ohshit/QuickStartApp_iOS/Lumberjack/Extensions/DispatchQueueLogFormatter.m; sourceTree = "<group>"; };
+		DE3EBD2D1A3E3DC8008937AE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		DE3EBD2F1A3E47A7008937AE /* blank-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blank-01.png"; sourceTree = "<group>"; };
+		DE3EBD311A3E482B008937AE /* url.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = url.jpg; sourceTree = "<group>"; };
+		DE3EBD651A3FE6FE008937AE /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		DE3EBD661A3FE6FE008937AE /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		DEF1F06F1A3E1537003F917F /* MyoKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MyoKit.framework; sourceTree = "<group>"; };
-		F71523F218337FD50033689C /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
-		F71523F318337FD50033689C /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
-		F71523F418337FD50033689C /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogger.h; sourceTree = "<group>"; };
-		F71523F518337FD50033689C /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDASLLogger.m; sourceTree = "<group>"; };
-		F71523F618337FD50033689C /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFileLogger.h; sourceTree = "<group>"; };
-		F71523F718337FD50033689C /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFileLogger.m; sourceTree = "<group>"; };
-		F71523F818337FD50033689C /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLog.h; sourceTree = "<group>"; };
-		F71523F918337FD50033689C /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLog.m; sourceTree = "<group>"; };
-		F71523FA18337FD50033689C /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
-		F71523FB18337FD50033689C /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
-		F71523FD18337FD50033689C /* ContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContextFilterLogFormatter.h; sourceTree = "<group>"; };
-		F71523FE18337FD50033689C /* ContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContextFilterLogFormatter.m; sourceTree = "<group>"; };
-		F71523FF18337FD50033689C /* DispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchQueueLogFormatter.h; sourceTree = "<group>"; };
-		F715240018337FD50033689C /* DispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchQueueLogFormatter.m; sourceTree = "<group>"; };
 		F7ADC29D17FDAAA70038A1D6 /* PHControlLightsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHControlLightsViewController.h; sourceTree = "<group>"; };
 		F7ADC29E17FDAAA70038A1D6 /* PHControlLightsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHControlLightsViewController.m; sourceTree = "<group>"; };
 		F7ADC29F17FDAAA70038A1D6 /* PHControlLightsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PHControlLightsViewController.xib; sourceTree = "<group>"; };
@@ -147,8 +156,13 @@
 				4CCACFA6165692D5008E9D69 /* PHAppDelegate.m */,
 				F7ADC29D17FDAAA70038A1D6 /* PHControlLightsViewController.h */,
 				F7ADC29E17FDAAA70038A1D6 /* PHControlLightsViewController.m */,
+				DE3EBD651A3FE6FE008937AE /* SettingsViewController.h */,
+				DE3EBD661A3FE6FE008937AE /* SettingsViewController.m */,
 				F7ADC29F17FDAAA70038A1D6 /* PHControlLightsViewController.xib */,
 				4CCACF9D165692D4008E9D69 /* Supporting Files */,
+				DE3EBD2D1A3E3DC8008937AE /* Images.xcassets */,
+				DE3EBD311A3E482B008937AE /* url.jpg */,
+				DE3EBD2F1A3E47A7008937AE /* blank-01.png */,
 			);
 			path = "HueQuickStartApp-iOS";
 			sourceTree = "<group>";
@@ -156,6 +170,7 @@
 		4CCACF9D165692D4008E9D69 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DE3EBD151A3E3AC6008937AE /* Extensions */,
 				4CCACF9E165692D4008E9D69 /* HueQuickStartApp-iOS-Info.plist */,
 				4CCACF9F165692D5008E9D69 /* InfoPlist.strings */,
 				4CCACFA2165692D5008E9D69 /* main.m */,
@@ -192,19 +207,26 @@
 			path = resources;
 			sourceTree = "<group>";
 		};
+		DE3EBD151A3E3AC6008937AE /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		F71523F118337FD50033689C /* Lumberjack */ = {
 			isa = PBXGroup;
 			children = (
-				F71523F218337FD50033689C /* DDAbstractDatabaseLogger.h */,
-				F71523F318337FD50033689C /* DDAbstractDatabaseLogger.m */,
-				F71523F418337FD50033689C /* DDASLLogger.h */,
-				F71523F518337FD50033689C /* DDASLLogger.m */,
-				F71523F618337FD50033689C /* DDFileLogger.h */,
-				F71523F718337FD50033689C /* DDFileLogger.m */,
-				F71523F818337FD50033689C /* DDLog.h */,
-				F71523F918337FD50033689C /* DDLog.m */,
-				F71523FA18337FD50033689C /* DDTTYLogger.h */,
-				F71523FB18337FD50033689C /* DDTTYLogger.m */,
+				DE3EBD061A3E3A24008937AE /* DDAbstractDatabaseLogger.h */,
+				DE3EBD071A3E3A24008937AE /* DDAbstractDatabaseLogger.m */,
+				DE3EBD081A3E3A24008937AE /* DDASLLogger.h */,
+				DE3EBD091A3E3A24008937AE /* DDASLLogger.m */,
+				DE3EBD0A1A3E3A24008937AE /* DDFileLogger.h */,
+				DE3EBD0B1A3E3A24008937AE /* DDFileLogger.m */,
+				DE3EBD0C1A3E3A24008937AE /* DDLog.h */,
+				DE3EBD0D1A3E3A24008937AE /* DDLog.m */,
+				DE3EBD0E1A3E3A24008937AE /* DDTTYLogger.h */,
+				DE3EBD0F1A3E3A24008937AE /* DDTTYLogger.m */,
 				F71523FC18337FD50033689C /* Extensions */,
 			);
 			name = Lumberjack;
@@ -214,10 +236,10 @@
 		F71523FC18337FD50033689C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				F71523FD18337FD50033689C /* ContextFilterLogFormatter.h */,
-				F71523FE18337FD50033689C /* ContextFilterLogFormatter.m */,
-				F71523FF18337FD50033689C /* DispatchQueueLogFormatter.h */,
-				F715240018337FD50033689C /* DispatchQueueLogFormatter.m */,
+				DE3EBD1F1A3E3BD4008937AE /* ContextFilterLogFormatter.h */,
+				DE3EBD201A3E3BD4008937AE /* ContextFilterLogFormatter.m */,
+				DE3EBD211A3E3BD4008937AE /* DispatchQueueLogFormatter.h */,
+				DE3EBD221A3E3BD4008937AE /* DispatchQueueLogFormatter.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -278,11 +300,14 @@
 				4CCACFA9165692D5008E9D69 /* Default.png in Resources */,
 				4CCACFAB165692D5008E9D69 /* Default@2x.png in Resources */,
 				4CCACFAD165692D5008E9D69 /* Default-568h@2x.png in Resources */,
+				DE3EBD2E1A3E3DC8008937AE /* Images.xcassets in Resources */,
+				DE3EBD301A3E47A7008937AE /* blank-01.png in Resources */,
 				4CCACFDA165693F4008E9D69 /* PHBridgePushLinkViewController.xib in Resources */,
 				4CCACFDC165693F4008E9D69 /* PHBridgeSelectionViewController.xib in Resources */,
 				4CCACFDD165693F4008E9D69 /* press_smartbridge.png in Resources */,
 				4CCACFDE165693F4008E9D69 /* press_smartbridge@2x.png in Resources */,
 				4C1C84561681F010003EE085 /* PHLoadingViewController.xib in Resources */,
+				DE3EBD321A3E482B008937AE /* url.jpg in Resources */,
 				F7ADC2A117FDAAA70038A1D6 /* PHControlLightsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -294,19 +319,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F715240418337FD50033689C /* DDLog.m in Sources */,
-				F715240218337FD50033689C /* DDASLLogger.m in Sources */,
+				DE3EBD121A3E3A24008937AE /* DDFileLogger.m in Sources */,
+				DE3EBD141A3E3A24008937AE /* DDTTYLogger.m in Sources */,
 				4CCACFA3165692D5008E9D69 /* main.m in Sources */,
 				4CCACFA7165692D5008E9D69 /* PHAppDelegate.m in Sources */,
-				F715240718337FD50033689C /* DispatchQueueLogFormatter.m in Sources */,
-				F715240518337FD50033689C /* DDTTYLogger.m in Sources */,
+				DE3EBD241A3E3BD4008937AE /* DispatchQueueLogFormatter.m in Sources */,
+				DE3EBD101A3E3A24008937AE /* DDAbstractDatabaseLogger.m in Sources */,
+				DE3EBD131A3E3A24008937AE /* DDLog.m in Sources */,
 				4CCACFD9165693F4008E9D69 /* PHBridgePushLinkViewController.m in Sources */,
 				4CCACFDB165693F4008E9D69 /* PHBridgeSelectionViewController.m in Sources */,
-				F715240118337FD50033689C /* DDAbstractDatabaseLogger.m in Sources */,
 				4C1C84551681F010003EE085 /* PHLoadingViewController.m in Sources */,
-				F715240318337FD50033689C /* DDFileLogger.m in Sources */,
 				F7ADC2A017FDAAA70038A1D6 /* PHControlLightsViewController.m in Sources */,
-				F715240618337FD50033689C /* ContextFilterLogFormatter.m in Sources */,
+				DE3EBD111A3E3A24008937AE /* DDASLLogger.m in Sources */,
+				DE3EBD231A3E3BD4008937AE /* ContextFilterLogFormatter.m in Sources */,
+				DE3EBD671A3FE6FE008937AE /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,7 +420,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HueQuickStartApp-iOS/HueQuickStartApp-iOS-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/HueQuickStartApp-iOS/HueQuickStartApp-iOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "HueQuickStartApp-iOS";
@@ -418,7 +444,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HueQuickStartApp-iOS/HueQuickStartApp-iOS-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/HueQuickStartApp-iOS/HueQuickStartApp-iOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "HueQuickStartApp-iOS";

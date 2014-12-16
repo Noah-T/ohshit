@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HueQuickStartApp-iOS/PHControlLightsViewController.m"
-            timestampString = "440284168.144813"
+            timestampString = "440398095.151393"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "381"
-            endingLineNumber = "381"
+            startingLineNumber = "390"
+            endingLineNumber = "390"
             landmarkName = "-didReceiveGyroscopeEvent:"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HueQuickStartApp-iOS/PHControlLightsViewController.m"
-            timestampString = "440284168.144813"
+            timestampString = "440398095.151393"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "379"
-            endingLineNumber = "379"
+            startingLineNumber = "388"
+            endingLineNumber = "388"
             landmarkName = "-didReceiveGyroscopeEvent:"
             landmarkType = "5">
          </BreakpointContent>

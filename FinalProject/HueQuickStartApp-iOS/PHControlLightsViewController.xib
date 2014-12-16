@@ -4,14 +4,10 @@
         <deployment identifier="iOS"/>
         <development version="5000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
-        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PHControlLightsViewController">
             <connections>
-                <outlet property="bridgeIpLabel" destination="80" id="83"/>
-                <outlet property="bridgeLastHeartbeatLabel" destination="82" id="85"/>
-                <outlet property="bridgeMacLabel" destination="81" id="84"/>
                 <outlet property="randomLightsButton" destination="11" id="86"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
@@ -21,8 +17,11 @@
             <rect key="frame" x="0.0" y="20" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Trixie UI-02" translatesAutoresizingMaskIntoConstraints="NO" id="ldS-gq-mdX">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="11">
-                    <rect key="frame" x="99" y="177" width="123" height="30"/>
+                    <rect key="frame" x="16" y="385" width="123" height="30"/>
                     <state key="normal" title="Randomize Lights">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -33,62 +32,100 @@
                         <action selector="randomizeColoursOfConnectLights:" destination="-1" eventType="touchUpInside" id="40"/>
                     </connections>
                 </button>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connected bridge" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" useAutomaticPreferredMaxLayoutWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="76">
-                    <rect key="frame" x="20" y="20" width="185" height="21"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wUX-yz-ebs">
+                    <rect key="frame" x="142" y="438" width="35" height="35"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="185" id="88"/>
-                        <constraint firstAttribute="height" constant="21" id="89"/>
+                        <constraint firstAttribute="width" constant="35" id="3c1-Sv-eZQ"/>
+                        <constraint firstAttribute="height" constant="35" id="ifn-gt-jCQ"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="Button" image="Trixie UI-05">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="presentSettings:" destination="-1" eventType="touchUpInside" id="c4Y-T2-3F1"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ZQ-vh-3Ph">
+                    <rect key="frame" x="249" y="438" width="35" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="ACT-Js-25E"/>
+                        <constraint firstAttribute="width" constant="35" id="eAK-Jk-cUh"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="Button" image="Trixie UI-06">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1QQ-Ys-4Vt">
+                    <rect key="frame" x="36" y="438" width="35" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="35" id="CkS-GW-yk0"/>
+                        <constraint firstAttribute="height" constant="35" id="qqX-Ff-FYz"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="Button" image="Trixie UI-04">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Act I : Scene III" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" useAutomaticPreferredMaxLayoutWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LYO-lW-DMO">
+                    <rect key="frame" x="16" y="47" width="116" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IP adress" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" useAutomaticPreferredMaxLayoutWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="77">
-                    <rect key="frame" x="20" y="67" width="72" height="21"/>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mU6-kI-hHp">
+                    <rect key="frame" x="30" y="70" width="260" height="294"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="72" id="115"/>
-                        <constraint firstAttribute="height" constant="21" id="116"/>
+                        <constraint firstAttribute="height" constant="294" id="fZS-cL-UFB"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mac adress" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" useAutomaticPreferredMaxLayoutWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="78">
-                    <rect key="frame" x="20" y="96" width="90" height="21"/>
+                    <mutableString key="text">HAMLET: To be, or not to be--that is the question:
+Whether 'tis nobler in the mind to suffer
+The slings and arrows of outrageous fortune (FADE TO GREEN LIGHTING)
+Or to take arms against a sea of troubles
+And by opposing end them. To die, to sleep--
+No more--and by a sleep to say we end
+The heartache, and the thousand natural shocks (BLUE LIGHT BLINK)
+That flesh is heir to. 'Tis a consummation
+Devoutly to be wished. To die, to sleep--
+To sleep--perchance to dream: ay, there's the rub,
+For in that sleep of death what dreams may come (RED LIGHT FLASH)
+When we have shuffled off this mortal coil,
+Must give us pause. There's the respect
+That makes calamity of so long life.
+For who would bear the whips and scorns of time,
+Th' oppressor's wrong, the proud man's contumely
+The pangs of despised love, the law's delay,
+The insolence of office, and the spurns
+That patient merit of th' unworthy takes,
+When he himself might his quietus make
+With a bare bodkin? Who would fardels bear,
+To grunt and sweat under a weary life,
+But that the dread of something after death,
+The undiscovered country, from whose bourn
+No traveller returns, puzzles the will,
+And makes us rather bear those ills we have
+Than fly to others that we know not of?
+Thus conscience does make cowards of us all,
+And thus the native hue of resolution
+Is sicklied o'er with the pale cast of thought,
+And enterprise of great pitch and moment
+With this regard their currents turn awry
+And lose the name of action. -- Soft you now,
+The fair Ophelia! -- Nymph, in thy orisons
+Be all my sins remembered.</mutableString>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Trixie_Button_Gradient" translatesAutoresizingMaskIntoConstraints="NO" id="hfo-2C-ggf">
+                    <rect key="frame" x="15" y="284" width="289" height="86"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="90" id="117"/>
-                        <constraint firstAttribute="height" constant="21" id="118"/>
+                        <constraint firstAttribute="height" constant="86" id="u6Q-dS-OO5"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last heartbeat" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" useAutomaticPreferredMaxLayoutWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="79">
-                    <rect key="frame" x="20" y="125" width="111" height="21"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="21" id="119"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not connected" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" useAutomaticPreferredMaxLayoutWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="80">
-                    <rect key="frame" x="162" y="67" width="138" height="21"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="138" id="114"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not connected" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" useAutomaticPreferredMaxLayoutWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="81">
-                    <rect key="frame" x="162" y="96" width="138" height="21"/>
-                    <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not connected" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" useAutomaticPreferredMaxLayoutWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="82">
-                    <rect key="frame" x="162" y="125" width="138" height="21"/>
-                    <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="87">
-                    <rect key="frame" x="99" y="215" width="123" height="30"/>
+                    <rect key="frame" x="189" y="385" width="123" height="30"/>
                     <state key="normal" title="Pair Myo">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -99,37 +136,62 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="82" firstAttribute="leading" secondItem="81" secondAttribute="leading" id="90"/>
-                <constraint firstItem="87" firstAttribute="trailing" secondItem="11" secondAttribute="trailing" id="91"/>
-                <constraint firstItem="87" firstAttribute="top" secondItem="11" secondAttribute="bottom" constant="8" symbolic="YES" id="92"/>
-                <constraint firstItem="87" firstAttribute="leading" secondItem="11" secondAttribute="leading" id="93"/>
-                <constraint firstItem="77" firstAttribute="firstBaseline" secondItem="80" secondAttribute="firstBaseline" id="94"/>
-                <constraint firstItem="82" firstAttribute="firstBaseline" secondItem="79" secondAttribute="firstBaseline" id="95"/>
-                <constraint firstItem="77" firstAttribute="top" secondItem="1" secondAttribute="top" constant="67" id="96"/>
-                <constraint firstItem="76" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" id="97"/>
-                <constraint firstItem="78" firstAttribute="top" secondItem="77" secondAttribute="bottom" constant="8" symbolic="YES" id="98"/>
-                <constraint firstItem="76" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="99"/>
-                <constraint firstItem="81" firstAttribute="trailing" secondItem="82" secondAttribute="trailing" id="100"/>
-                <constraint firstItem="82" firstAttribute="baseline" secondItem="79" secondAttribute="baseline" id="101"/>
-                <constraint firstItem="80" firstAttribute="baseline" secondItem="77" secondAttribute="baseline" id="102"/>
-                <constraint firstItem="80" firstAttribute="leading" secondItem="81" secondAttribute="leading" id="103"/>
-                <constraint firstItem="78" firstAttribute="leading" secondItem="79" secondAttribute="leading" id="104"/>
-                <constraint firstItem="77" firstAttribute="leading" secondItem="76" secondAttribute="leading" id="105"/>
-                <constraint firstItem="11" firstAttribute="top" secondItem="1" secondAttribute="top" constant="177" id="106"/>
-                <constraint firstItem="78" firstAttribute="leading" secondItem="77" secondAttribute="leading" id="107"/>
-                <constraint firstItem="79" firstAttribute="top" secondItem="78" secondAttribute="bottom" constant="8" symbolic="YES" id="108"/>
-                <constraint firstItem="81" firstAttribute="baseline" secondItem="78" secondAttribute="baseline" id="109"/>
-                <constraint firstItem="81" firstAttribute="trailing" secondItem="80" secondAttribute="trailing" id="110"/>
-                <constraint firstItem="87" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="111"/>
-                <constraint firstItem="78" firstAttribute="firstBaseline" secondItem="81" secondAttribute="firstBaseline" id="112"/>
-                <constraint firstAttribute="trailing" secondItem="80" secondAttribute="trailing" constant="20" id="113"/>
-                <constraint firstItem="87" firstAttribute="top" secondItem="11" secondAttribute="bottom" constant="8" id="BBT-yD-S5R"/>
-                <constraint firstAttribute="centerX" secondItem="87" secondAttribute="centerX" id="sGA-4x-egM"/>
+                <constraint firstItem="87" firstAttribute="trailing" secondItem="11" secondAttribute="trailing" constant="173" id="91"/>
+                <constraint firstItem="87" firstAttribute="top" secondItem="11" secondAttribute="bottom" constant="-30" id="92"/>
+                <constraint firstItem="87" firstAttribute="leading" secondItem="11" secondAttribute="leading" constant="173" id="93"/>
+                <constraint firstItem="87" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" constant="90.5" id="111"/>
+                <constraint firstItem="1QQ-Ys-4Vt" firstAttribute="top" secondItem="1" secondAttribute="top" constant="438" id="1KN-jq-W59"/>
+                <constraint firstItem="87" firstAttribute="top" secondItem="11" secondAttribute="bottom" constant="-30" id="BBT-yD-S5R"/>
+                <constraint firstItem="9ZQ-vh-3Ph" firstAttribute="top" secondItem="1" secondAttribute="top" constant="438" id="CAL-ML-5cN"/>
+                <constraint firstItem="hfo-2C-ggf" firstAttribute="centerX" secondItem="mU6-kI-hHp" secondAttribute="centerX" id="HVe-w7-OT4"/>
+                <constraint firstAttribute="centerX" secondItem="wUX-yz-ebs" secondAttribute="centerX" id="MKu-Oq-u0b"/>
+                <constraint firstAttribute="trailing" secondItem="mU6-kI-hHp" secondAttribute="trailing" constant="30" id="Nfg-ON-N6a"/>
+                <constraint firstItem="wUX-yz-ebs" firstAttribute="top" secondItem="11" secondAttribute="bottom" constant="23" id="Q6n-8B-d20"/>
+                <constraint firstItem="1QQ-Ys-4Vt" firstAttribute="top" secondItem="hfo-2C-ggf" secondAttribute="bottom" constant="68" id="Scm-6R-bPO"/>
+                <constraint firstItem="ldS-gq-mdX" firstAttribute="top" secondItem="1" secondAttribute="top" id="WDm-4X-D17"/>
+                <constraint firstItem="mU6-kI-hHp" firstAttribute="top" secondItem="LYO-lW-DMO" secondAttribute="bottom" constant="2.5" id="WML-g9-XAB"/>
+                <constraint firstItem="87" firstAttribute="top" secondItem="mU6-kI-hHp" secondAttribute="bottom" constant="21" id="XHB-RE-1i1"/>
+                <constraint firstItem="wUX-yz-ebs" firstAttribute="top" secondItem="1" secondAttribute="top" constant="438" id="Xa5-VM-No9"/>
+                <constraint firstAttribute="bottom" secondItem="ldS-gq-mdX" secondAttribute="bottom" id="ZQw-oA-gI5"/>
+                <constraint firstItem="LYO-lW-DMO" firstAttribute="top" secondItem="1" secondAttribute="top" constant="47" id="amW-ya-T4R"/>
+                <constraint firstItem="LYO-lW-DMO" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="16" id="h86-JL-tFN"/>
+                <constraint firstItem="mU6-kI-hHp" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="30" id="pQ2-yb-25j"/>
+                <constraint firstItem="1QQ-Ys-4Vt" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="35.5" id="qxO-do-DTh"/>
+                <constraint firstAttribute="centerX" secondItem="87" secondAttribute="centerX" constant="-90.5" id="sGA-4x-egM"/>
+                <constraint firstItem="hfo-2C-ggf" firstAttribute="leading" secondItem="LYO-lW-DMO" secondAttribute="leading" constant="-1" id="tlf-ov-p6r"/>
+                <constraint firstAttribute="trailing" secondItem="ldS-gq-mdX" secondAttribute="trailing" id="ulF-4V-JQt"/>
+                <constraint firstAttribute="trailing" secondItem="9ZQ-vh-3Ph" secondAttribute="trailing" constant="36" id="xGN-Ff-V40"/>
+                <constraint firstItem="ldS-gq-mdX" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="zWQ-Jr-wNA"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <point key="canvasLocation" x="298" y="379"/>
         </view>
+        <viewController id="d7a-iS-vpc">
+            <layoutGuides>
+                <viewControllerLayoutGuide type="top" id="5h1-kI-viO"/>
+                <viewControllerLayoutGuide type="bottom" id="KWy-8z-CGs"/>
+            </layoutGuides>
+            <view key="view" contentMode="scaleToFill" id="R7U-Rq-VBD">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            </view>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <point key="canvasLocation" x="298" y="1003"/>
+        </viewController>
     </objects>
+    <resources>
+        <image name="Trixie UI-02" width="3083" height="5558"/>
+        <image name="Trixie UI-04" width="426" height="463"/>
+        <image name="Trixie UI-05" width="441" height="440"/>
+        <image name="Trixie UI-06" width="410" height="519"/>
+        <image name="Trixie_Button_Gradient" width="1151" height="300"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

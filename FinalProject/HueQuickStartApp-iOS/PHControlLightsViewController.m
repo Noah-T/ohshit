@@ -8,6 +8,7 @@
 #import <MyoKit/MyoKit.h>
 #import <HueSDK_iOS/HueSDK.h>
 #import "PHLoadingViewController.h"
+#import "SettingsViewController.h"
 #define MAX_HUE 65535
 
 @interface PHControlLightsViewController()
@@ -16,6 +17,7 @@
 @property (nonatomic,weak) IBOutlet UILabel *bridgeIpLabel;
 @property (nonatomic,weak) IBOutlet UILabel *bridgeLastHeartbeatLabel;
 @property (nonatomic,weak) IBOutlet UIButton *randomLightsButton;
+- (IBAction)presentSettings:(id)sender;
 
 //Myo
 @property (strong, nonatomic) TLMPose *currentPose;
@@ -57,6 +59,8 @@
 @property (nonatomic) int currentHue;
 @property (nonatomic) int currentSaturation;
 @property (nonatomic) int currentBrightness;
+
+@property (strong, nonatomic) SettingsViewController *settingsViewController;
 
 - (IBAction)pairMyo:(id)sender;
 //Philips
@@ -123,6 +127,8 @@
                                   NSForegroundColorAttributeName : [UIColor blackColor]
                                   }forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = bbi;
+    
+    self.navigationController.navigationBar.translucent = YES;
     
     UIColor *orange = [UIColor colorWithRed:255/255.0
                                       green:129.0/255.0
@@ -198,6 +204,7 @@
     [self.PHHueSDK enableLocalConnection];
     [self.PHHueSDK setLocalHeartbeatInterval:0.5f forResourceType: RESOURCES_LIGHTS];
     
+    self.settingsViewController = [SettingsViewController new];
     
 }
 
@@ -298,6 +305,8 @@
     
     [self.navigationController pushViewController:settings animated:YES];
 }
+
+
 
 - (void)didReceivePoseChange:(NSNotification *)notification {
     NSDate *myDate = [[NSDate alloc] init];
@@ -530,5 +539,14 @@
     self.dblTap = NO;
     self.fingersSpreadActive = NO;
 }
+- (IBAction)presentSettings:(id)sender {
+    
+    if (!self.settingsViewController) {
+        self.settingsViewController = [SettingsViewController new];
+    }
+    
+    [self.navigationController pushViewController:self.settingsViewController animated:YES];
+}
+
 @end
 
